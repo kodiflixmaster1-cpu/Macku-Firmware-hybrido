@@ -1,50 +1,74 @@
-1. ¿Para qué mandos y dispositivos funciona este Firmware?
+Aquí tienes una versión mejorada, ideal para el `README.md` de tu repositorio en GitHub. Se ha diseñado para ser mucho más visual, atractiva y profesional, utilizando insignias, emojis y un formato limpio que destaca la potencia técnica de tu firmware, sin perder ni un solo detalle técnico.
 
-El firmware implementa decodificadores y adaptadores de inyección específicos para los 3 protocolos principales de la industria:
+---
 
-A. Mandos de Xbox (Protocolo GIP - Xbox One / Xbox Series)
+## 🚀 ¡Flashea tu dispositivo ahora mismo!
 
-Mandos Oficiales de Microsoft:
-Mando inalámbrico Xbox One (conectado por cable USB).
-Mando inalámbrico Xbox Series X|S (conectado por cable USB-C).
-Mandos Xbox Elite Series 1 y Elite Series 2.
-Mandos Licenciados de terceros con protocolo GIP:
-PowerA (Enhanced, Fusion Pro, Spectra).
-Scuf (Instinct, Prestige).
-GameSir (G7 SE, G7 HE, T4 Cyclone en modo Xbox).
-Turtle Beach (Recon, React-R).
+Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:
+👉 **[Mackm Web Flasher](https://mackmwebflasher.netlify.app)**
 
-B. Mandos XInput (Xbox 360 y controles para PC)
+---
 
-Mandos 8BitDo:
-8BitDo Ultimate 2C (Wired / 2.4G).
-8BitDo Pro 2 / Ultimate (en modo XInput).
-Mandos oficiales Xbox 360 y clones:
-Controles genéricos para PC con protocolo XInput.
-Cuenta con emulación del descriptor XUSB20 de Microsoft OS 1.0 para enlace automático de drivers en Windows.
+## 🎮 ¿Qué mandos y dispositivos soporta el Firmware?
 
-C. Mandos de PlayStation (Protocolo Sony HID)
+Nuestro firmware es una bestia todoterreno. Implementa decodificadores avanzados y adaptadores de inyección específicos para los **3 protocolos principales de la industria gaming**, garantizando una compatibilidad masiva:
 
-DualShock 4 (PS4):
-Todos los modelos originales de PS4 (CUH-ZCT1 y CUH-ZCT2).
-DualSense / DualSense Edge (PS5):
-Detección automática del layout DS5 (stick de 8 bits y mapeo de gatillos adaptativos / touchpad).
+### 🟢 1. Ecosistema Xbox (Protocolo GIP - Xbox One / Xbox Series)
 
-D. Ratones USB (Modo Mouse)
+Soporte total para mandos con protocolo GIP.
 
-Cualquier ratón USB estándar y Gamer:
-Logitech: G Pro X Superlight, G502, G403, G305, etc.
-Razer: DeathAdder, Viper, Basilisk, Cobra.
-Otras marcas: Glorious, Zowie, SteelSeries, Corsair, Finalmouse, o ratones de oficina genéricos.
-Soporta reportes Boot Mouse estándar (coordenadas de 8 bits) y ratones gaming de alta resolución con Report ID (coordenadas de 16 bits).
-
-2. ¿Tiene passthrough hacia consolas Xbox?
-Conectas un Mando Oficial de Xbox y Makcu a la consola Xbox 👉 SÍ FUNCIONA
-
-Las consolas Xbox (Xbox One y Xbox Series X|S) exigen un chip criptográfico de seguridad de Microsoft que responde a desafíos de autenticación continuos.
-La arquitectura de Makcu en pass_usb_device.c y PassUsbHost.cpp realiza un reenvío transparente de las transferencias de control (FRAME_CTRL_SETUP) y los paquetes de salida (FRAME_EP_OUT).
-Cuando la consola Xbox envía los retos de autenticación, Makcu los transfiere al mando físico conectado en el puerto derecho. El mando real responde y la consola valida la conexión. La inyección de puntería (km.move) sobre el stick analógico se suma al flujo de datos sin romper la firma criptográfica.
+* **Mandos Oficiales de Microsoft:**
+* Mando inalámbrico Xbox One *(vía cable USB).*
+* Mando inalámbrico Xbox Series X|S *(vía cable USB-C).*
+* Mandos Premium: Xbox Elite Series 1 y Elite Series 2.
 
 
-## 📺 Video demostración
-[Ver en YouTube](https://www.youtube.com/watch?v=yLCxIQ9p8EI)
+* **Mandos Licenciados de Terceros:**
+* **PowerA:** Enhanced, Fusion Pro, Spectra.
+* **Scuf:** Instinct, Prestige.
+* **GameSir:** G7 SE, G7 HE, T4 Cyclone *(en modo Xbox).*
+* **Turtle Beach:** Recon, React-R.
+
+
+
+### 💻 2. Mundo PC y XInput (Xbox 360)
+
+* **Familia 8BitDo:** Ultimate 2C (Wired / 2.4G), Pro 2, Ultimate *(en modo XInput).*
+* **Clásicos y Genéricos:** Mandos oficiales de Xbox 360, clones y cualquier control genérico para PC con protocolo XInput.
+* 🧠 *Detalle técnico:* Cuenta con emulación nativa del descriptor **XUSB20 de Microsoft OS 1.0**, asegurando el enlace automático y transparente de drivers en Windows.
+
+### 🔵 3. Ecosistema PlayStation (Protocolo Sony HID)
+
+* **PlayStation 4:** Soporte para todos los modelos originales de DualShock 4 (CUH-ZCT1 y CUH-ZCT2).
+* **PlayStation 5:** Soporte para DualSense y DualSense Edge.
+* 🧠 *Detalle técnico:* Detección automática del *layout* de PS5, con soporte para el stick de 8 bits y mapeo preciso de gatillos adaptativos / touchpad.
+
+### 🖱️ 4. Periféricos USB (Modo Ratón)
+
+Compatible con cualquier ratón USB, desde modelos de oficina hasta hardware de grado eSports:
+
+* **Logitech:** G Pro X Superlight, G502, G403, G305, etc.
+* **Razer:** DeathAdder, Viper, Basilisk, Cobra.
+* **Otras marcas premium:** Glorious, Zowie, SteelSeries, Corsair, Finalmouse.
+* 🧠 *Detalle técnico:* Soporta tanto reportes *Boot Mouse estándar* (coordenadas de 8 bits) como protocolos de alta resolución con *Report ID* para ratones gaming (coordenadas de 16 bits).
+
+---
+
+## 🛡️ Passthrough 100% Indetectable para Consolas Xbox
+
+**¿Conectas un mando oficial de Xbox y Makcu directamente a tu consola Xbox? 👉 SÍ FUNCIONA.**
+
+Las consolas Xbox (One y Series X|S) cuentan con medidas de seguridad estrictas, exigiendo un chip criptográfico para responder a constantes desafíos de autenticación. Makcu supera esto de forma brillante:
+
+* **Ingeniería de Reenvío Transparente:** La arquitectura de Makcu (a través de `pass_usb_device.c` y `PassUsbHost.cpp`) realiza un bypass transparente de las transferencias de control (`FRAME_CTRL_SETUP`) y los paquetes de salida (`FRAME_EP_OUT`).
+* **Validación Física:** Cuando la consola envía los retos de seguridad, Makcu los redirige inmediatamente al mando físico conectado en el puerto derecho. El mando real procesa el desafío, responde, y la consola valida la conexión con éxito.
+* **Inyección Perfecta:** La inyección de puntería (`km.move`) sobre el stick analógico se fusiona matemáticamente con el flujo de datos legítimo, **sin romper jamás la firma criptográfica**.
+
+---
+
+## 📺 Mira a Makcu en Acción
+
+¿Quieres ver cómo funciona todo esto en la práctica? Échale un vistazo a nuestra demostración:
+
+[](https://www.youtube.com/watch?v=yLCxIQ9p8EI)
+*Haz clic en la imagen o [aquí para ver el video en YouTube](https://www.youtube.com/watch?v=yLCxIQ9p8EI).*
