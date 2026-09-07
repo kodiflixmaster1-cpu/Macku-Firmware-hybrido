@@ -67,4 +67,4 @@ Las consolas Xbox (One y Series X|S) cuentan con medidas de seguridad estrictas,
 ¿Quieres ver cómo funciona todo esto en la práctica? Échale un vistazo a nuestra demostración:
 
 [](https://www.youtube.com/watch?v=yLCxIQ9p8EI)
-*Haz clic en la imagen o [aquí para ver el video en YouTube](https://www.youtube.com/watch?v=yLCxIQ9p8EI).*
+*Haz clic [aquí para ver el video en YouTube](https://www.youtube.com/watch?v=yLCxIQ9p8EI).*
