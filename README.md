@@ -1,7 +1,3 @@
-Aquí tienes una versión mejorada, ideal para el `README.md` de tu repositorio en GitHub. Se ha diseñado para ser mucho más visual, atractiva y profesional, utilizando insignias, emojis y un formato limpio que destaca la potencia técnica de tu firmware, sin perder ni un solo detalle técnico.
-
----
-
 ## 🚀 ¡Flashea tu dispositivo ahora mismo!
 
 Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:
