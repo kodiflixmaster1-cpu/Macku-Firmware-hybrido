@@ -27,7 +27,7 @@ Soporte total para mandos con protocolo GIP.
 
 
 
-### 💻 2. Mundo PC y XInput (Xbox 360)
+### 💻 2. Modo PC y XInput (Xbox 360)
 
 * **Familia 8BitDo:** Ultimate 2C (Wired / 2.4G), Pro 2, Ultimate *(en modo XInput).*
 * **Clásicos y Genéricos:** Mandos oficiales de Xbox 360, clones y cualquier control genérico para PC con protocolo XInput.
