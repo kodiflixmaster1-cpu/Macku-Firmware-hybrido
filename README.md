@@ -1,7 +1,7 @@
 ## 🚀 ¡Flashea tu dispositivo ahora mismo!
 
 Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:
-👉 **[Mackm Web Flasher](https://mackmwebflasher.netlify.app)**
+👉 **[Mackm Web Flasher](https://web-flasher-render.onrender.com)**
 
 ---
 
