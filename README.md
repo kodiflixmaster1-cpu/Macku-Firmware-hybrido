@@ -5,7 +5,7 @@ Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra
 
 
 Configura curvas macros directo en la memoria de tu macku
-👉 **[Makcu Configuratorr](https://web-flasher-render.onrender.com](https://makcu-configurator.onrender.com/)**
+👉 **[Makcu Configuratorr](https://makcu-configurator.onrender.com/)**
 
 
 📋 Lista Completa y Detallada de Controles Soportados por el Firmware
