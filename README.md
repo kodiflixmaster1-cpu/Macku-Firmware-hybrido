@@ -3,7 +3,7 @@
 Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:
 👉 **[Mackm Web Flasher](https://web-flasher-render.onrender.com)**
 
-📋 Lista Completa y Detallada de Controles Soportados por tu Firmware
+📋 Lista Completa y Detallada de Controles Soportados por el Firmware
 
 Esta tabla resume cómo el firmware  clasifica e interactúa con cada mando o periférico:
 
@@ -27,9 +27,9 @@ Esta tabla resume cómo el firmware  clasifica e interactúa con cada mando o pe
 | **DragonRise / SHANWAN Gamepad** | `0079:0122`, `181C` | DirectInput | `DEV_TYPE_GENERIC_HID` | 🟡 **Passthrough Transparente** | Passthrough limpio; nunca se confunden con ratones y mantienen sus entradas intactas. |
 
 
-⚡ ¿Son compatibles con MAKCU y con software que envíe señales por UART (Ultravision, Sunone version by Derian, DMA, DS4Windows version by Derian)?
+⚡ ¿Compatibles con MAKCU y con software que envíe señales por UART (Ultravision, Sunone version by Derian, DMA, DS4Windows version by Derian)?
 
-Arquitectura de firmware fue construida específicamente para este caso de uso:
+La arquitectura del firmware fue construida específicamente para este caso de uso:
 
 ```
 [Mando Físico (PS5 / Xbox / GameSir)] 
@@ -64,7 +64,7 @@ Arquitectura de firmware fue construida específicamente para este caso de uso:
 
 ## 1. 🖱️ Ratones USB Soportados (`DEV_TYPE_MOUSE`)
 
-### ¿Cómo los detecta tu firmware?
+### ¿Cómo los detecta el firmware?
 * **Clase USB:** `0x03` (HID).
 * **Protocolo:** `0x02` (Mouse).
 * Lo identifica automáticamente como `is_mouse_device_ = true;` y lo envía a Left como **`DEV_TYPE_MOUSE`**.
@@ -89,7 +89,7 @@ Arquitectura de firmware fue construida específicamente para este caso de uso:
 
 2. ⌨️ Teclados USB Soportados (`DEV_TYPE_KEYBOARD`)
 
-### ¿Cómo los detecta tu firmware?
+### ¿Cómo los detecta el firmware?
 * **Clase USB:** `0x03` (HID).
 * **Protocolo:** `0x01` (Keyboard).
 * Lo clasifica como `is_keyboard_device_ = true;` y lo envía a Left como **`DEV_TYPE_KEYBOARD`**.
