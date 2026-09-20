@@ -136,5 +136,7 @@ El puerto **USB3** de MAKCU opera en modo **enlace punto a punto 1:1**:
 
 ¿Quieres ver cómo funciona todo esto en la práctica? Échale un vistazo a nuestra demostración:
 
-[](https://www.youtube.com/watch?v=sGvmNrihHaU)
+
 *Haz clic [aquí para ver el video en YouTube](https://www.youtube.com/watch?v=sGvmNrihHaU).*
+
+
