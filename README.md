@@ -132,11 +132,15 @@ Cuando conectas un **ratón** en el puerto USB3 de entrada física de MAKCU:
 
 El puerto **USB3** de MAKCU opera en modo **enlace punto a punto 1:1**:
 * Puedes conectar **1 dispositivo físico a la vez** (tu mando preferido o tu ratón)
+
+
+
+
 ## 📺 Mira a Makcu en Acción
+¿Quieres ver cómo funciona todo esto en la práctica?  
+Échale un vistazo a nuestra demostración:
 
-¿Quieres ver cómo funciona todo esto en la práctica? Échale un vistazo a nuestra demostración:
+[![Demo en YouTube](https://img.youtube.com/vi/sGvmNrihHaU/0.jpg)](https://www.youtube.com/watch?v=sGvmNrihHaU)
 
-
-*Haz clic [aquí para ver el video en YouTube](https://www.youtube.com/watch?v=sGvmNrihHaU).*
 
 
