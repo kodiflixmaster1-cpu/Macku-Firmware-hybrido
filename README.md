@@ -1,18 +1,17 @@
-## 🚀 ¡Flashea tu dispositivo ahora mismo!
+# 🚀 ¡Flashea tu dispositivo ahora mismo!
 
-Para empezar a usar el firmware de inmediato sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:
+Para empezar a usar el firmware sin complicaciones, utiliza nuestra herramienta oficial de configuración y flasheo desde tu navegador:  
 👉 **[Makcu Web Flasher](https://web-flasher-render.onrender.com)**
 
-
-Configura curvas macros directo en la memoria de tu macku
+Configura curvas y macros directo en la memoria de tu Makcu:  
 👉 **[Makcu Configurator](https://makcu-configurator.onrender.com/)**
 
+---
 
-📋 Lista Completa y Detallada de Controles Soportados por el Firmware
+## 📋 Controles Soportados
+Esta tabla resume cómo el firmware clasifica e interactúa con cada mando o periférico:
 
-Esta tabla resume cómo el firmware  clasifica e interactúa con cada mando o periférico:
-
-| Periférico / Mando | VID : PID | Modo Requerido en el Mando | Tipo en tu Firmware | Soporte en Hardware (Curvas, Recoil, Mods) | Comportamiento Técnico |
+|| Periférico / Mando | VID : PID | Modo Requerido en el Mando | Tipo en tu Firmware | Soporte en Hardware (Curvas, Recoil, Mods) | Comportamiento Técnico |
 | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Sony PS5 DualSense** | `054C:0CE6` | USB Cable | `DEV_TYPE_CONTROLLER` (DS5) | 🟢 **100% Completo** | Reportes de 64 bytes (`0x01`). Curvas de 5 nodos, retroceso, sticky aim rotacional y mods activos. |
 | **Sony PS5 DualSense Edge** | `054C:0DF2` | USB Cable | `DEV_TYPE_DS_EDGE` | 🌟 **100% Exclusivo Pro** | Decodificación nativa del byte 10 (`buf[10]`): **paletas traseras L/R y botones Fn** transmitidos a telemetría y consola. |
@@ -31,110 +30,28 @@ Esta tabla resume cómo el firmware  clasifica e interactúa con cada mando o pe
 | **Nintendo Switch Pro** | `057E:2009` | USB Cable | `DEV_TYPE_GENERIC_HID` | 🟡 **Passthrough Transparente** | Se retransmite sin interferencias hacia la consola/PC, pero sin curvas locales (formato de 12 bits de Nintendo). |
 | **DragonRise / SHANWAN Gamepad** | `0079:0122`, `181C` | DirectInput | `DEV_TYPE_GENERIC_HID` | 🟡 **Passthrough Transparente** | Passthrough limpio; nunca se confunden con ratones y mantienen sus entradas intactas. |
 
+---
 
-⚡ ¿Compatibles con MAKCU y con software que envíe señales por UART (Ultravision, Sunone version by Derian, DMA, DS4Windows version by Derian)?
+## 🖱️ Ratones Compatibles
+- Logitech G Pro, G502, G305, G903  
+- Razer Viper, DeathAdder, Basilisk  
+- Glorious Model O/D/I  
+- SteelSeries Aerox, Rival, Prime  
+- Corsair Katar, M65, K70  
+- Zowie / Vaxee / Pulsar / Finalmouse  
 
-La arquitectura del firmware fue construida específicamente para este caso de uso:
-
-```
-[Mando Físico (PS5 / Xbox / GameSir)] 
-              ↓ (USB3 Host)
-    [ESP32-S3 Right]
-              ↓ (IPC UART a 4 Mbps)
-    [ESP32-S3 Left] ←── (Comandos UART: km.move, km.mask, km.trim) ── [PC / DMA / Ultravision / Sunone / DS4Windows]
-              ↓ (USB1 Device TinyUSB)
-   [Consola (PS5/Xbox) o PC de Juego]
-
-
-¿Por qué funciona con CUALQUIER software externo por UART?
-
-1. **El protocolo `km.*` es universal:**
-   Todos los softwares mencionados (**Ultravision Cuda/DML**, **Sunone version by Derian**, **clientes DMA 2-PC** y tu versión modificada de **DS4Windows version by Derian**) se comunican con MAKCU enviando cadenas estándar por el puerto COM serie a 4,000,000 baud (CH343):
-   * `km.move(dx, dy)` → Inyección de puntería / aimbot.
-   * `km.mask(btn, mode)` → Supresión de botones físicos.
-   * `km.trim(x, y)` → Compensación de punto de mira.
-
-2. **Fusión Asimétrica Inteligente en `km_inject.c`:**
-   En los mandos **PlayStation (DS4, DualSense, DualSense Edge)** y **Xbox (GIP, XInput, GameSir, 8BitDo)**, el firmware realiza una **mezcla en tiempo real** (*stick blending*):
-   * Si tú mueves el stick físico con la mano y al mismo tiempo el software externo (**Ultravision** o **Sunone**) envía una corrección de puntería por UART, el firmware **combina ambas señales de forma continua sin que el juego note saltos ni tartamudeos**.
-
-3. **El Modo Especial "Slot 4 — Mando Limpio / Bypass PC" (`0x40`):**
-   Tu firmware incluye un modo pensado exactamente para software DMA y de PC:
-   * Al seleccionar el **Slot 4** (ya sea desde el Web Configurator o pulsando `Share + D-Pad Izquierda` en el mando), el hardware **apaga el recoil y las curvas internas del ESP32**.
-   * De este modo, el mando queda completamente "puro" para que softwares como **Ultravision**, **Sunone version by Derian** o **DS4Windows version by Derian**, **DMA**  tengan el **100% del control del apuntado sin que las curvas del hardware colisionen con los cálculos del aimbot en PC**.
-   
-   
-   
-   
-
-## 1. 🖱️ Ratones USB Soportados (`DEV_TYPE_MOUSE`)
-
-### ¿Cómo los detecta el firmware?
-* **Clase USB:** `0x03` (HID).
-* **Protocolo:** `0x02` (Mouse).
-* Lo identifica automáticamente como `is_mouse_device_ = true;` y lo envía a Left como **`DEV_TYPE_MOUSE`**.
-
-### Protocolos y Formatos de Reporte que procesa `apply_mouse()`:
-1. **Ratones Gaming de Alta Resolución (Deltas de 16 bits):** Procesa coordenadas relativas `X, Y` de alta precisión (-32767 a +32767).
-2. **Ratones Estándar (Deltas de 8 bits):** Coordenadas clásicas (-127 a +127).
-3. **Soporte de Report ID (`0x01` / `0x02`):** Detecta automáticamente si el paquete inicia con Report ID (muy común en ratones gaming modernos).
-4. **Hasta 5 Botones Físicos + Clics Inyectados:** Fusión de clic izquierdo, derecho, central y laterales con clics remotos (`km.click`, `km.left`, `km.right`).
-
-### Marcas y Modelos de Ratones Compatibles:
-* **Logitech G:** G Pro Wireless, G Pro X Superlight (1 y 2), G502 (Hero/Lightspeed), G305, G403, G703, G903 (cableados o con dongle USB LIGHTSPEED).
-* **Razer:** Viper (V2 Pro, V3 Pro, Mini, Ultimate), DeathAdder (V2, V3, Essential), Basilisk, Naga.
-* **Glorious:** Model O, Model D, Model I (cableados y wireless con dongle 2.4 GHz).
-* **SteelSeries:** Aerox 3/5/9, Rival 3/5/600, Prime.
-* **Corsair:** Katar Pro, M65, Harpoon, Scimitar, Dark Core.
-* **Zowie / Vaxee:** Series EC, FK, ZA, S (100% plug & play sin software requerido).
-* **Pulsar / Lamzu / Endgame Gear / Ninjutso / Finalmouse:** Cualquier ratón USB HID estándar (cableado o dongle 2.4 GHz).
-
-> ⚠️ **Recomendación de Polling Rate:** Si usas un ratón de 4000 Hz u 8000 Hz (ej. Razer 8K), configúralo a **1000 Hz** en su software antes de conectarlo a MAKCU para máxima estabilidad con el USB del microcontrolador.
-
-
-2. ⌨️ Teclados USB Soportados (`DEV_TYPE_KEYBOARD`)
-
-### ¿Cómo los detecta el firmware?
-* **Clase USB:** `0x03` (HID).
-* **Protocolo:** `0x01` (Keyboard).
-* Lo clasifica como `is_keyboard_device_ = true;` y lo envía a Left como **`DEV_TYPE_KEYBOARD`**.
-
-### Protocolos que procesa `apply_keyboard()`:
-1. **Reportes Estándar USB Boot Keyboard de 8 bytes:**
-   * **Byte 0:** Teclas modificadoras (Ctrl Izq/Der, Shift Izq/Der, Alt, AltGr, GUI/Windows).
-   * **Byte 1:** Reservado (0x00).
-   * **Bytes 2 al 7:** Hasta 6 teclas simultáneas (6KRO) con keycodes USB universales.
-2. **Fusión Inteligente de Teclas:**
-   * Si tú mantienes presionado **WASD** físicamente en tu teclado, el firmware **respeta tus pulsaciones físicas** y añade en los bytes libres (`buf[i] == 0`) las teclas que envíe el software externo por UART (`km.press`, `km.down`, `km.up`) sin soltar las tuyas.
-
-### Marcas y Teclados Compatibles:
-* **Teclados Mecánicos y Custom:** Keychron, Ducky, Akko, Varmilo, Epomaker, Royal Kludge, Glorious GMMK.
-* **Logitech G:** G Pro Keyboard, G915, G413, G512, G213.
-* **Razer:** Huntsman (Mini, V2, Analog), BlackWidow, DeathStalker, Cynosa.
-* **Corsair:** K70, K65, K60, K55, K100 (en modo estándar/bios).
-* **SteelSeries:** Apex Pro, Apex 7, Apex 3.
-* **Wooting:** 60HE, Two HE (en modo USB estándar).
-* Cualquier teclado de membrana o mecánico USB estándar con protocolo HID.
+> ⚠️ Recomendación: si usas ratones de 4000 Hz u 8000 Hz, configúralos a **1000 Hz** para máxima estabilidad.
 
 ---
 
-## 3. ¿Cómo interactúan con el Software UART (DMA, Ultravision, Sunone, DS4Windows)?
+## ⌨️ Teclados Compatibles
+- Keychron, Ducky, Akko, Epomaker  
+- Logitech G Pro, G915, G413  
+- Razer Huntsman, BlackWidow  
+- Corsair K70, K100  
+- SteelSeries Apex Pro, Apex 7  
 
-Cuando conectas un **ratón** en el puerto USB3 de entrada física de MAKCU:
-
-  **Con Ratón conectado:**
-   * Las señales de movimiento físico de tu mano van a la PC.
-   * Si **Ultravision**, **Sunone** o un software de puntería **DMA** envían comandos `km.move(dx, dy)`, el firmware ejecuta la función `apply_mouse()`: **suma los deltas del software (`inj_x, inj_y`) a los deltas reales de tu mano**.
-   * Resultado: Movimiento humano asistido con micro-correcciones instantáneas por hardware.
-
-
-## 📌 Recordatorio de Conexión Física (USB 1:1)
-
-El puerto **USB3** de MAKCU opera en modo **enlace punto a punto 1:1**:
-* Puedes conectar **1 dispositivo físico a la vez** (tu mando preferido o tu ratón)
-
-
-
+---
 
 ## 📺 Mira a Makcu en Acción
 ¿Quieres ver cómo funciona todo esto en la práctica?  
@@ -142,5 +59,9 @@ El puerto **USB3** de MAKCU opera en modo **enlace punto a punto 1:1**:
 
 [![Demo en YouTube](https://img.youtube.com/vi/sGvmNrihHaU/0.jpg)](https://www.youtube.com/watch?v=sGvmNrihHaU)
 
+---
 
-
+## 📌 Recordatorio de Conexión
+- Puerto **USB3** → entrada de mando o ratón  
+- Puerto **USB1** → salida hacia consola/PC  
+- Slot 4 → modo limpio para software externo (DMA, Ultravision, Sunone, DS4Windows)
